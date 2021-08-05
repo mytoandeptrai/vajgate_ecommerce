@@ -1,0 +1,61 @@
+.card__body {
+  padding: 0 40px;
+  display: flex;
+  flex-flow: row no-wrap;
+  margin-bottom: 25px;
+}
+
+.card__body-left {
+  width: 60%;
+}
+
+.card__body-right {
+  padding-left: 50px;
+  width: 40%;
+  position: relative;
+}
+
+.card__body-left img {
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+}
+
+.modal-name {
+  font-family: "Montserrat", sans-serif;
+}
+
+.modal-list li span {
+  font-family: "Montserrat", sans-serif;
+  margin: 20px 0;
+  display: block;
+}
+
+span.stock {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  color: #a1cc16;
+}
+
+.reviews .stars {
+  display: inline-block;
+  list-style: none;
+  padding: 0;
+}
+
+.reviews .stars > li {
+  display: inline-block;
+}
+
+.reviews .stars > span {
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  margin-left: 5px;
+  color: #555;
+}
+
+.reviews .stars > li i {
+  color: #f7c01b;
+}
+
+

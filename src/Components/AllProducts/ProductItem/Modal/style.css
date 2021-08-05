@@ -1,0 +1,174 @@
+.modal.modal-show {
+  display: flex;
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal {
+  opacity: 0;
+  visibility: hidden;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+}
+
+.modal.modal-show .modal-content {
+  animation: toTop 0.4s 0.1s ease-in-out forwards;
+}
+
+@keyframes toTop {
+  0% {
+    opacity: 0;
+    top: 100px;
+  }
+  100% {
+    opacity: 1;
+    top: 0;
+  }
+}
+
+.modal-content {
+  opacity: 0;
+  position: relative;
+  width: 70% !important;
+  height: 70% !important;
+  background-color: #f1f1f1;
+  border: none;
+  box-shadow: 0.5px 0.5px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.modal-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.modal-detail img.modal-img {
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
+  box-shadow: unset;
+}
+
+.modal-info {
+  height: 100%;
+  width: 50%;
+  padding: 20px 50px;
+}
+
+.modal-name {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 26px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.modal-price {
+  font-family: "Montserrat", sans-serif;
+  font-size: 22px;
+  color: #0113ff;
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+
+.modal-info ul li span {
+  font-family: "Montserrat", sans-serif;
+  display: block;
+  margin: 10px 0;
+}
+
+.modal-btn-addtocart {
+  margin-top: 60px;
+  margin-bottom: 20px;
+  width: 240px;
+  height: 60px;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  line-height: 60px;
+  text-align: center;
+  color: #fff;
+  background-color: #0113ff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.modal-btn-addtocart:hover {
+  background-color: rgb(35, 35, 35);
+}
+
+.btn-sharebox {
+  font-family: "Montserrat", sans-serif;
+}
+
+.btn-sharebox i {
+  margin: 0 8px;
+  cursor: pointer;
+  transition: all 0.1s linear;
+}
+
+.btn-sharebox i:hover {
+  color: #0113ff;
+}
+
+.btn-close-modal {
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 101;
+}
+
+.btn-close-modal:hover {
+  opacity: 0.8;
+}
+
+.product_admin-btn {
+  position: relative;
+  top: -30px;
+  display: flex;
+}
+
+.product_admin-btn div {
+  font-size: 18px;
+  padding: 10px 20px;
+  background-color: var(--color-primary);
+  color: #fff;
+  cursor: pointer;
+}
+
+.product_admin-delete {
+  margin-right: 20px;
+}
+
+.card_btn-addtocart {
+  cursor: pointer;
+  border: 1px solid #115dd8;
+  padding: 10px 30px;
+  color: #fff;
+  background: #115dd8;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  transition: 200ms;
+  width: 200px;
+  margin: 30px 0;
+  display: block;
+  text-align: center;
+}
