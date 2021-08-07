@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import ProductCard from "../../Components/ProductCard";
-import { layChiTietSanPham } from "../../Redux/Products/products.actions";
+import {
+  layChiTietSanPham,
+  layDanhSachSPLienQuan,
+} from "../../Redux/Products/products.actions";
 
 const ChiTietSanPham = () => {
   const history = useHistory();
@@ -17,20 +20,18 @@ const ChiTietSanPham = () => {
     window.scrollTo(0, 0);
   }, [productId]);
 
-  const isLoadingDetail = useSelector(
-    (state) => state.productsData.isLoadingDetail
-  );
+  const [isAdmin, setIsAdmin] = useState(false);
   const product = useSelector((state) => state.productsData.product);
 
-  const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => {
+    if (product?.name) {
+      dispatch(layDanhSachSPLienQuan(product.category));
+    }
+  }, [product]);
 
   return (
     <>
-      <ProductCard
-        isLoadingDetail={isLoadingDetail}
-        product={product}
-        isAdmin={isAdmin}
-      />
+      <ProductCard isAdmin={isAdmin} />
     </>
   );
 };

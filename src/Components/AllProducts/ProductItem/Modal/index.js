@@ -1,8 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
-const Modal = ({ isAdmin, openModal, closeModal, product, day }) => {
-  console.log(product);
+const Modal = ({
+  isAdmin,
+  openModal,
+  closeModal,
+  product,
+  day,
+  handleAddToCart,
+}) => {
   return (
     <>
       <div className={openModal ? "modal modal-show" : "modal"}>
@@ -72,7 +78,7 @@ const Modal = ({ isAdmin, openModal, closeModal, product, day }) => {
               ) : (
                 <div
                   className="card_btn-addtocart"
-                  //   onClick={() => addCart(product)}
+                  onClick={() => handleAddToCart(product)}
                 >
                   Add To Cart
                 </div>

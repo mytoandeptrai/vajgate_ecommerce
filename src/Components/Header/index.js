@@ -7,6 +7,7 @@ import Menu from "./icons/menu.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../Utilities/firebase/utils";
 import userTypes from "../../Redux/User/user.types";
+import CartHover from "../CartHover";
 
 const Header = () => {
   const [menu, setMenu] = useState(false);
@@ -14,7 +15,8 @@ const Header = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLogged, setisLogged] = useState(false);
   const currentUser = useSelector((state) => state.usersData.currentUser);
-  
+  const cartItems = useSelector((state) => state.cartsData.cartItems);
+
   useEffect(() => {
     if (currentUser !== null) {
       setIsAdmin(currentUser.maLoaiNguoiDung === "QuanTri" ? true : false);
@@ -132,9 +134,10 @@ const Header = () => {
         <div className="header-right">
           <div className="cart">
             <Link to="/cart">
-              <span className="nb">0</span>
+              <span className="nb">{currentUser ? cartItems.length : 0}</span>
               <img src={Cart} alt="cart"></img>
             </Link>
+            <CartHover currentUser={currentUser} cartItems={cartItems} />
           </div>
 
           {isLogged ? (

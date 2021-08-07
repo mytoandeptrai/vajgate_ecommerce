@@ -1,9 +1,12 @@
 import dayjs from "dayjs";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import cartTypes from "../../../Redux/Cart/cart.types";
 import Modal from "./Modal";
 import "./style.css";
 const ProductItem = ({ product, key }) => {
+  const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const day = dayjs(product.birthday).format("DD-MM-YYYY");
@@ -14,6 +17,13 @@ const ProductItem = ({ product, key }) => {
 
   const closeModal = () => {
     setOpenModal(false);
+  };
+
+  const handleAddToCart = (cartItem) => {
+    dispatch({
+      type: cartTypes.ADD_TO_CART,
+      payload: cartItem,
+    });
   };
 
   return (
@@ -56,7 +66,12 @@ const ProductItem = ({ product, key }) => {
             ) : (
               <>
                 <div className="price">${product.price} / 1h</div>
-                <div className="btn-addtocart">Add To Cart</div>
+                <div
+                  className="btn-addtocart"
+                  onClick={() => handleAddToCart(product)}
+                >
+                  Add To Cart
+                </div>
               </>
             )}
           </div>
@@ -65,7 +80,10 @@ const ProductItem = ({ product, key }) => {
             <div>Quick look</div>
           </button>
 
-          <button className="rp-btn-addtocart">
+          <button
+            className="rp-btn-addtocart"
+            onClick={() => handleAddToCart(product)}
+          >
             <div>Add to cart</div>
           </button>
         </div>
@@ -99,6 +117,7 @@ const ProductItem = ({ product, key }) => {
           openModal={openModal}
           closeModal={closeModal}
           day={day}
+          handleAddToCart={handleAddToCart}
         />
       </div>
     </>

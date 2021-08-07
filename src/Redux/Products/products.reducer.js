@@ -3,8 +3,8 @@ import productTypes from "./products.types";
 const initialState = {
   isLoading: true,
   products: [],
-  product: {},
   isLoadingDetail: true,
+  product: {},
   productRelative: [],
 };
 
@@ -25,8 +25,13 @@ const productsReducer = (state = initialState, action) => {
     case productTypes.FETCH_PRODUCT_START:
       return {
         ...state,
-        isLoadingDetail: false,
         product: action.payload,
+        isLoadingDetail: false,
+      };
+    case productTypes.FETCH_PRODUCT_RELATIVE_START:
+      return {
+        ...state,
+        productRelative: action.payload,
       };
     default:
       return state;

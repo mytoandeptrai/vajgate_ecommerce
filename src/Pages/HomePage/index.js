@@ -2,9 +2,12 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import AllProducts from "../../Components/AllProducts";
+import PageNotFound from "../../Components/PageNotFound/PageNotFound";
 import WithAdminAuth from "../../hoc/WithAdminAuth";
+import WithAuth from "../../hoc/WithAuth";
 import userTypes from "../../Redux/User/user.types";
 import { auth, firestore } from "../../Utilities/firebase/utils";
+import Cart from "../Cart";
 import ChiTietSanPham from "../ChiTietSanPham";
 import DangKy from "../DangKy";
 import DangNhap from "../DangNhap";
@@ -66,6 +69,16 @@ const HomePage = () => {
               </WithAdminAuth>
             )}
           />
+
+          <Route
+            path="/cart"
+            render={() => (
+              <WithAuth>
+                <Cart />
+              </WithAuth>
+            )}
+          />
+          <Route exact="*" component={PageNotFound} />
         </Switch>
       </div>
     </>
