@@ -1,0 +1,32 @@
+.cart-payment {
+  padding: 45px 35px;
+  width: 30%;
+  background-color: #fafafa;
+}
+
+.cart-payment h2 {
+  font-weight: 700;
+  position: relative;
+  display: block;
+  font-size: 24px;
+  line-height: 36px;
+  margin-top: 0;
+  margin-bottom: 30px;
+  letter-spacing: 3px;
+}
+
+.details-banking h4 {
+  font-size: 16px !important;
+  font-weight: 700;
+}
+.details-banking p {
+  margin-bottom: 0 !important;
+}
+.btns-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.error-message {
+  color: red !important;
+}

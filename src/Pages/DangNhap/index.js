@@ -18,13 +18,13 @@ const DangNhap = (formikProps) => {
     window.scrollTo(0, 0);
   }, []);
 
-  const currentUser = useSelector((state) => state.usersData.currentUser);
+  // const currentUser = useSelector((state) => state.usersData.currentUser);
 
-  useEffect(() => {
-    if (currentUser !== null) {
-      history.push("/");
-    }
-  }, [currentUser]);
+  // useEffect(() => {
+  //   if (currentUser !== null) {
+  //     history.push("/");
+  //   }
+  // }, [currentUser]);
 
   const history = useHistory();
   const dispatch = useDispatch();

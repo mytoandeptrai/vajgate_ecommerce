@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CartContent from "../../Components/CartContent";
 import CartTotal from "../../Components/CartTotal";
+import CheckOutForm from "../../Components/CheckOutForm";
 import { TotalPriceOfCarts } from "../../Redux/Cart/cart.helpers";
 import "./style.css";
 const Cart = () => {
@@ -12,6 +13,21 @@ const Cart = () => {
 
   const cartItems = useSelector((state) => state.cartsData.cartItems);
   const total = TotalPriceOfCarts(cartItems);
+
+  const [step, setStep] = useState(1);
+
+  const getStepContent = (step) => {
+    switch (step) {
+      case 1:
+        return <CartTotal total={total} setStep={setStep} />;
+      case 2:
+        return (
+          <CheckOutForm total={total} cartItems={cartItems} setStep={setStep} />
+        );
+      default:
+        break;
+    }
+  };
 
   return (
     <>
@@ -42,7 +58,7 @@ const Cart = () => {
               <h2 className="cart-title">Shopping Cart</h2>
               <div className="cart-body">
                 <CartContent cartItems={cartItems} />
-                <CartTotal total={total} />
+                {getStepContent(step)}
               </div>
             </div>
           </>

@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Button from "@material-ui/core/Button";
 import "./style.css";
-const CartTotal = ({ total }) => {
+const CartTotal = ({ total, setStep }) => {
   return (
     <div className="cart-checkout">
       <h2>CART TOTALS</h2>
@@ -26,7 +27,16 @@ const CartTotal = ({ total }) => {
       <Link to="#!" className="cart-payment-btn">
         Payment
       </Link>
-      <div style={{ float: "right" }}></div>
+      <div style={{ float: "right" }}>
+        <Button
+          variant="contained"
+          color="primary"
+          className="btn-checkout"
+          onClick={() => setStep(2)}
+        >
+          Check out
+        </Button>
+      </div>
     </div>
   );
 };

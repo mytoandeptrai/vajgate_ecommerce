@@ -11,6 +11,8 @@ import Cart from "../Cart";
 import ChiTietSanPham from "../ChiTietSanPham";
 import DangKy from "../DangKy";
 import DangNhap from "../DangNhap";
+import History from "../History";
+import HistoryDetails from "../HistoryDetails";
 import QuanLySanPham from "../QuanLySanPham";
 import QuanLyTheLoai from "../QuanLyTheLoai";
 import Recovery from "../Recovery";
@@ -22,10 +24,19 @@ const HomePage = () => {
       if (userAuth) {
         let userConfig = {};
         const userRef = firestore.collection("users").doc(userAuth.uid);
-
         userRef.get().then((doc) => {
           if (doc.exists) {
-            userConfig = doc.data();
+            const userNow = doc.data();
+            console.log(userNow);
+            userConfig = {
+              displayName: userNow.displayName,
+              email: userNow.email,
+              hoTen: userNow.hoTen,
+              image: userNow.image,
+              maLoaiNguoiDung: userNow.maLoaiNguoiDung,
+              soDt: userNow.soDt,
+              userId: userAuth.uid,
+            };
             dispatch({
               type: userTypes.SET_CURRENT_USER,
               payload: userConfig,
@@ -49,7 +60,7 @@ const HomePage = () => {
       <div>
         <Switch>
           <Route exact path="/" component={AllProducts} />
-          <Route path="/detail/:productId" component={ChiTietSanPham} exact />
+          <Route path="/detail/:productId" component={ChiTietSanPham} />
           <Route path="/register" component={DangKy} />
           <Route path="/login" component={DangNhap} />
           <Route path="/recovery" component={Recovery} />
@@ -78,6 +89,26 @@ const HomePage = () => {
               </WithAuth>
             )}
           />
+          <Route
+            exact
+            path="/history"
+            render={() => (
+              <WithAuth>
+                <History />
+              </WithAuth>
+            )}
+          />
+
+          <Route
+            exact
+            path="/history/:orderId"
+            render={() => (
+              <WithAuth>
+                <HistoryDetails />
+              </WithAuth>
+            )}
+          />
+
           <Route exact="*" component={PageNotFound} />
         </Switch>
       </div>
