@@ -1,5 +1,6 @@
 import swal from "sweetalert";
 import { firestore } from "../../Utilities/firebase/utils";
+import { handleClearCart } from "../Cart/cart.actions";
 import orderTypes from "./order.types";
 
 export const layToanBoOrderAction = () => {
@@ -36,7 +37,6 @@ export const themOrderAction = (orderData) => {
             type: orderTypes.ADD_NEW_ORDER,
           });
           dispatch(layToanBoOrderAction());
-          //   swal("Thành công", "Đặt hàng thành công", "success");
         })
         .catch((error) => {
           swal("Thất bại", "Đặt hàng thất bại", "warning");

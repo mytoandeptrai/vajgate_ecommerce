@@ -8,6 +8,7 @@ import { themOrderAction } from "../../Redux/Orders/order.actions";
 import "./style.css";
 import emailjs from "emailjs-com";
 import swal from "sweetalert";
+import { handleClearCart } from "../../Redux/Cart/cart.actions";
 const CheckOutForm = ({ total, cartItems, setStep }) => {
   const initialValues = {
     name: "",
@@ -91,6 +92,7 @@ const CheckOutForm = ({ total, cartItems, setStep }) => {
               };
               console.log(configOrder);
               dispatch(themOrderAction(configOrder));
+              dispatch(handleClearCart());
               resetForm();
               sendEmail(values.email, JSON.stringify(paymentDetails));
             }}

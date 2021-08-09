@@ -75,3 +75,5 @@ export const handleRemoveCartItem = ({ prevCartItems, cartItemToRemove }) => {
   localStorage.setItem("cartItems", JSON.stringify(newCartItem));
   return newCartItem;
 };
+
+

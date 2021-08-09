@@ -2,10 +2,13 @@ import swal from "sweetalert";
 import { firestore } from "../../Utilities/firebase/utils";
 import productTypes from "./products.types";
 
-export const layToanBoProductAction = () => {
+export const layToanBoProductAction = (category) => {
   return async (dispatch) => {
     try {
       let ref = await firestore.collection("products").orderBy("createdAt");
+
+      if (category && category !== "All")
+        ref = ref.where("category", "==", category);
 
       ref.get().then((querySnapshot) => {
         const productArray = querySnapshot.docs.map((doc) => {

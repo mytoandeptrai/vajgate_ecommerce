@@ -2,22 +2,30 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { layDanhSachCategories } from "../../Redux/Categories/categories.actions";
 import "./style.css";
-const Filter = () => {
+const Filter = ({
+  handleCategory,
+  queryInput,
+  setQueryInput,
+  sortValue,
+  handleSort,
+}) => {
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(layDanhSachCategories());
   }, []);
-  const [queryInput, setQueryInput] = useState("");
+
   const categories = useSelector((state) => state.categoriesData.categories);
+
   return (
     <>
       <div className="filter">
         <div className="filter-left">
           <ul>
             <li
-              value=""
+              value="All"
               className="filter-category active"
-              //   onClick={handleCategory}
+              onClick={handleCategory}
             >
               All
             </li>
@@ -27,7 +35,7 @@ const Filter = () => {
                   className="filter-category"
                   key={category._id}
                   value={category.name}
-                  //   onClick={handleCategory}
+                  onClick={handleCategory}
                 >
                   {category.name}
                 </li>
@@ -40,7 +48,7 @@ const Filter = () => {
           <div>
             <input
               className="filter-input"
-              //   onChange={handleQuery}
+              onChange={(e) => setQueryInput(e.target.value)}
               value={queryInput}
               placeholder="Search Name..."
             />
@@ -54,35 +62,36 @@ const Filter = () => {
               <ul>
                 <li
                   className="filter-sort-item active"
-                  // onClick={handleSort}
+                  value="default"
+                  onClick={handleSort}
                 >
                   Default
                 </li>
                 <li
                   className="filter-sort-item"
-                  value="sort=-rented"
-                  //   onClick={handleSort}
+                  value="Rented"
+                  onClick={handleSort}
                 >
                   Popularity
                 </li>
-                <li
+                {/* <li
                   className="filter-sort-item"
-                  value="sort=-createdAt"
-                  //   onClick={handleSort}
+                  value="createdAt"
+                  onClick={handleSort}
                 >
                   Newness
-                </li>
+                </li> */}
                 <li
                   className="filter-sort-item"
-                  value="sort=price"
-                  //   onClick={handleSort}
+                  value="Lowest"
+                  onClick={handleSort}
                 >
                   Price: Low to High
                 </li>
                 <li
                   className="filter-sort-item"
-                  value="sort=-price"
-                  //   onClick={handleSort}
+                  value="Highest"
+                  onClick={handleSort}
                 >
                   Price: High to Low
                 </li>
