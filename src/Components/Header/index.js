@@ -12,16 +12,9 @@ import CartHover from "../CartHover";
 const Header = () => {
   const [menu, setMenu] = useState(false);
   const [profile, setProfile] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [isLogged, setisLogged] = useState(false);
   const currentUser = useSelector((state) => state.usersData.currentUser);
   const cartItems = useSelector((state) => state.cartsData.cartItems);
-
-  useEffect(() => {
-    if (currentUser !== null) {
-      setIsAdmin(currentUser.maLoaiNguoiDung === "QuanTri" ? true : false);
-    }
-  }, [currentUser]);
 
   const dispatch = useDispatch();
 
@@ -113,9 +106,13 @@ const Header = () => {
             to="/"
             exact="true"
             className="logo"
-            style={isAdmin ? { fontSize: "20px" } : {}}
+            style={
+              currentUser?.maLoaiNguoiDung === "QuanTri"
+                ? { fontSize: "20px" }
+                : {}
+            }
           >
-            VAJGATE{isAdmin ? "-Admin" : ""}
+            VAJGATE{currentUser?.maLoaiNguoiDung === "QuanTri" ? "-Admin" : ""}
           </Link>
         </h2>
         <ul className="nav">
@@ -129,7 +126,7 @@ const Header = () => {
               Home
             </NavLink>
           </li>
-          {isAdmin ? adminRoute() : ""}
+          {currentUser?.maLoaiNguoiDung === "QuanTri" ? adminRoute() : ""}
         </ul>
         <div className="header-right">
           <div className="cart">
@@ -176,7 +173,7 @@ const Header = () => {
                     Logout
                   </NavLink>
                 </div>
-                {isAdmin ? adminRoute() : ""}
+                {currentUser?.maLoaiNguoiDung === "QuanTri" ? adminRoute() : ""}
               </div>
             </>
           ) : (

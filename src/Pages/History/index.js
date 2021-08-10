@@ -53,6 +53,7 @@ const Hisory = () => {
                     <tr>
                       <th scope="col">Payment ID</th>
                       <th scope="col">Date Of Purchased</th>
+                      <th scope="col">Status</th>
                       <th scope="col"></th>
                     </tr>
                   </thead>
@@ -63,6 +64,11 @@ const Hisory = () => {
                           <td>{payment._id}</td>
                           <td>
                             {new Date(payment.orderDate).toLocaleDateString()}
+                          </td>
+                          <td>
+                            {payment.isProcessing === false
+                              ? "Processing"
+                              : "is Shipping"}
                           </td>
                           <td style={{ textAlign: "center" }}>
                             <Link to={`/history/${payment._id}`}>View</Link>

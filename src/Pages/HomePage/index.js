@@ -65,7 +65,16 @@ const HomePage = () => {
           <Route path="/login" component={DangNhap} />
           <Route path="/recovery" component={Recovery} />
           <Route
+            exact
             path="/create_product"
+            render={() => (
+              <WithAdminAuth>
+                <QuanLySanPham />
+              </WithAdminAuth>
+            )}
+          />
+          <Route
+            path="/create_product/edit/:productId"
             render={() => (
               <WithAdminAuth>
                 <QuanLySanPham />

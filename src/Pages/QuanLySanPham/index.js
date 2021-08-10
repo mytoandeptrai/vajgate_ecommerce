@@ -4,11 +4,15 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import FileBase64 from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { layDanhSachCategories } from "../../Redux/Categories/categories.actions";
-import { themSanPhamAction } from "../../Redux/Products/products.actions";
+import {
+  suaSanPhamAction,
+  themSanPhamAction,
+} from "../../Redux/Products/products.actions";
 import "./style.css";
 const QuanLySanPham = () => {
+  const { productId } = useParams();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -33,12 +37,24 @@ const QuanLySanPham = () => {
     images: "",
   };
   const categories = useSelector((state) => state.categoriesData.categories);
-
+  const products = useSelector((state) => state.productsData.products);
   const [productData, setProductData] = useState(initialState);
   const [startdate, setStartDate] = useState(new Date());
   const [onEdit, setOnEdit] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (productId) {
+      products.map((product) => {
+        if (product._id === productId) {
+          setProductData(product);
+          setStartDate(new Date(product.birthday));
+          setOnEdit(true);
+        }
+      });
+    }
+  }, [productId, products]);
 
   const resetForm = () => {
     setProductData({
@@ -61,7 +77,25 @@ const QuanLySanPham = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (onEdit) {
-      return;
+      const productConfig = {
+        product_id: productData.product_id,
+        name: productData.name,
+        japanName: productData.japanName,
+        bust: productData.bust,
+        waist: productData.waist,
+        hip: productData.hip,
+        height: productData.height,
+        blood_type: productData.blood_type,
+        birthday: productData.birthday,
+        hobby: productData.hobby,
+        price: productData.price,
+        category: productData.category,
+        images: productData.images,
+        rented: productData.rented,
+        createdAt: productData.createdAt,
+      };
+      const productId = productData._id;
+      dispatch(suaSanPhamAction(productConfig, productId, history));
     } else {
       dispatch(themSanPhamAction(productData, resetForm));
     }
@@ -76,8 +110,6 @@ const QuanLySanPham = () => {
       [name]: value,
     });
   };
-
-  console.log(productData);
 
   let styleImaheUpload = {
     display: productData.images ? "block" : "none",

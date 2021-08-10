@@ -12,6 +12,8 @@ const AllProducts = () => {
   const [queryInput, setQueryInput] = useState("");
   const [sortValue, setSortValue] = useState("");
   const [isVisible, setIsVisible] = useState(6);
+  const [isAdmin, setIsAdmin] = useState(false);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -21,11 +23,19 @@ const AllProducts = () => {
   }, [category]);
 
   const products = useSelector((state) => state.productsData.products);
-
+  const currentUser = useSelector((state) => state.usersData.currentUser);
   const productFilter = useSelector(
     (state) => state.productsData.productFilter
   );
   const isFilter = useSelector((state) => state.productsData.isFilter);
+
+  useEffect(() => {
+    if (currentUser?.maLoaiNguoiDung === "QuanTri") {
+      setIsAdmin(true);
+    }
+  }, [currentUser]);
+
+  console.log(isAdmin);
 
   if (products.length === 0) {
     var styleProducts = {
@@ -101,13 +111,7 @@ const AllProducts = () => {
           ) : (
             handleSearch(data.slice(0, isVisible)).map((product, index) => {
               return (
-                <ProductItem
-                  product={product}
-                  key={index}
-                  // isAdmin={isAdmin}
-                  // deleteProduct={deleteProduct}
-                  // handleCheckProduct={handleCheckProduct}
-                />
+                <ProductItem product={product} key={index} isAdmin={isAdmin} />
               );
             })
           )}

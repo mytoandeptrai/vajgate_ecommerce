@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import cartTypes from "../../../Redux/Cart/cart.types";
+import { xoaSanPhamAction } from "../../../Redux/Products/products.actions";
 import Modal from "./Modal";
 import "./style.css";
-const ProductItem = ({ product, key }) => {
+const ProductItem = ({ product, key, isAdmin }) => {
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
   const day = dayjs(product.birthday).format("DD-MM-YYYY");
 
   const openModel = () => {
@@ -26,6 +26,10 @@ const ProductItem = ({ product, key }) => {
     });
   };
 
+  const handleDeleteProduct = (productId) => {
+    dispatch(xoaSanPhamAction(productId));
+  };
+
   return (
     <>
       <div className="col-sm-12 col-md-6 col-lg-4">
@@ -38,7 +42,7 @@ const ProductItem = ({ product, key }) => {
             ""
           )}
 
-          {isAdmin ? (
+          {/* {isAdmin ? (
             <input
               type="checkbox"
               checked={product.checked}
@@ -47,7 +51,7 @@ const ProductItem = ({ product, key }) => {
             ></input>
           ) : (
             ""
-          )}
+          )} */}
 
           <Link to={`/detail/${product._id}`}>
             <img
@@ -92,16 +96,14 @@ const ProductItem = ({ product, key }) => {
           <div className="product_admin-btn">
             <div
               className="product_admin-delete"
-              //   onClick={() =>
-              //     deleteProduct(product._id, product.images.public_id)
-              //   }
+              onClick={() => handleDeleteProduct(product._id)}
             >
               Delete
             </div>
             <div className="product_admin-edit">
               {" "}
               <Link
-                to={`/product/edit/${product._id}`}
+                to={`/create_product/edit/${product._id}`}
                 style={{ color: "white" }}
               >
                 Edit

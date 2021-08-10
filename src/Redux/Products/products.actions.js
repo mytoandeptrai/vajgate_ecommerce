@@ -57,6 +57,63 @@ export const themSanPhamAction = (productData, resetForm) => {
   };
 };
 
+export const suaSanPhamAction = (productData, productId, history) => {
+  return async (dispatch) => {
+    try {
+      await firestore
+        .collection("products")
+        .doc(productId)
+        .update(productData)
+        .then(() => {
+          dispatch({
+            type: productTypes.EDIT_PRODUCT_START,
+          });
+          dispatch(layToanBoProductAction());
+          history.push("/");
+          swal("Thành công", "Sửa dữ liệu thành công", "success");
+        })
+        .catch((error) => {
+          swal("Thất bại", "Sửa dữ liệu thất bại", "warning");
+        });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const xoaSanPhamAction = (productId) => {
+  return async (dispatch) => {
+    try {
+      swal({
+        title: "Bạn chắc chứ?",
+        text: "Sản phẩm này xóa không thể khôi phục lại!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      }).then(async (willDelete) => {
+        if (willDelete) {
+          await firestore
+            .collection("products")
+            .doc(productId)
+            .delete()
+            .then(() => {
+              dispatch({
+                type: productTypes.DELETE_PRODUCT_START,
+              });
+              dispatch(layToanBoProductAction());
+              swal("Thành công", "Xóa thành công", "success");
+            })
+            .catch(() => {
+              swal("Thất bại", "Không thể xóa sản phẩm này", "warning");
+            });
+        }
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
 export const layChiTietSanPham = (productId) => {
   return async (dispatch) => {
     try {
