@@ -1,19 +1,76 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { layOrderNguoiDung } from "../../Redux/Orders/order.actions";
+import {
+  layOrderNguoiDung,
+  layToanBoOrderAction,
+} from "../../Redux/Orders/order.actions";
 import "./style.css";
 const Hisory = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   const currentUser = useSelector((state) => state.usersData.currentUser);
+  const [isAdmin, setIsAdmin] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(layOrderNguoiDung(currentUser.userId));
   }, [currentUser]);
 
+  useEffect(() => {
+    if (currentUser?.maLoaiNguoiDung === "QuanTri") {
+      setIsAdmin(true);
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    dispatch(layToanBoOrderAction());
+  }, []);
+
   const orderHistory = useSelector((state) => state.ordersData.orderHistory);
+  const orders = useSelector((state) => state.ordersData.orders);
+
+  const renderHistoryAdmin = () => {
+    return (
+      <>
+        {orders.map((payment, index) => {
+          return (
+            <tr key={index}>
+              <td>{payment._id}</td>
+              <td>{new Date(payment.orderDate).toLocaleDateString()}</td>
+              <td>
+                {payment.isProcessing === false ? "Processing" : "is Shipping"}
+              </td>
+              <td style={{ textAlign: "center" }}>
+                <Link to={`/history/${payment._id}`}>View</Link>
+              </td>
+            </tr>
+          );
+        })}
+      </>
+    );
+  };
+
+  const renderHistoryUser = () => {
+    return (
+      <>
+        {orderHistory.map((payment, index) => {
+          return (
+            <tr key={index}>
+              <td>{payment._id}</td>
+              <td>{new Date(payment.orderDate).toLocaleDateString()}</td>
+              <td>
+                {payment.isProcessing === false ? "Processing" : "is Shipping"}
+              </td>
+              <td style={{ textAlign: "center" }}>
+                <Link to={`/history/${payment._id}`}>View</Link>
+              </td>
+            </tr>
+          );
+        })}
+      </>
+    );
+  };
 
   return (
     <>
@@ -40,9 +97,9 @@ const Hisory = () => {
                 <div className="history-header">
                   <h2>History</h2>
                   <span className="history-label">
-                    You have{" "}
+                    {isAdmin ? "Your shop has" : "You have"}
                     <span className="history-length">
-                      {orderHistory.length}
+                      {isAdmin ? orders.length : orderHistory.length}
                     </span>{" "}
                     ordered
                   </span>
@@ -58,24 +115,9 @@ const Hisory = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {orderHistory.map((payment, index) => {
-                      return (
-                        <tr key={index}>
-                          <td>{payment._id}</td>
-                          <td>
-                            {new Date(payment.orderDate).toLocaleDateString()}
-                          </td>
-                          <td>
-                            {payment.isProcessing === false
-                              ? "Processing"
-                              : "is Shipping"}
-                          </td>
-                          <td style={{ textAlign: "center" }}>
-                            <Link to={`/history/${payment._id}`}>View</Link>
-                          </td>
-                        </tr>
-                      );
-                    })}
+                    {isAdmin === true
+                      ? renderHistoryAdmin()
+                      : renderHistoryUser()}
                   </tbody>
                 </table>
               </div>{" "}

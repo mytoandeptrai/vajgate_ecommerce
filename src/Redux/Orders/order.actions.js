@@ -69,3 +69,31 @@ export const layOrderNguoiDung = (userId) => {
     }
   };
 };
+
+export const layChiTietOrder = (orderId) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: orderTypes.FETCH_ORDER_DETAILS_START,
+      });
+      await firestore
+        .collection("orders")
+        .doc(orderId)
+        .get()
+        .then((querySnapshot) => {
+          if (querySnapshot.exists) {
+            const orderDetails = {
+              ...querySnapshot.data(),
+              _id: querySnapshot.id,
+            };
+            dispatch({
+              type: orderTypes.FETCH_ORDER_DETAILS,
+              payload: orderDetails,
+            });
+          }
+        });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};

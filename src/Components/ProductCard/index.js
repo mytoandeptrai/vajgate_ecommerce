@@ -1,11 +1,13 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import cartTypes from "../../Redux/Cart/cart.types";
 import ProductItem from "../AllProducts/ProductItem";
 import loadingimage from "./loading.gif";
 import ProductCardItem from "./ProductCardItem";
 import "./style.css";
 const ProductCard = ({ isAdmin }) => {
+  const dispatch = useDispatch();
   const isLoadingDetail = useSelector(
     (state) => state.productsData.isLoadingDetail
   );
@@ -18,6 +20,12 @@ const ProductCard = ({ isAdmin }) => {
     (el) => el._id !== product._id
   );
 
+  const handleAddToCart = (cartItem) => {
+    dispatch({
+      type: cartTypes.ADD_TO_CART,
+      payload: cartItem,
+    });
+  };
   return (
     <>
       {isLoadingDetail === true && Object.entries(product).length === 0 ? (
@@ -61,7 +69,7 @@ const ProductCard = ({ isAdmin }) => {
                 ) : (
                   <div
                     className="card_btn-addtocart"
-                    // onClick={() => addCart(product)}
+                    onClick={() => handleAddToCart(product)}
                   >
                     Add To Cart
                   </div>

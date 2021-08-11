@@ -61,6 +61,14 @@ const Header = () => {
         >
           Categories
         </NavLink>
+        <NavLink
+          to="/history"
+          activeClassName="nav-link--active"
+          className="nav-link"
+          exact
+        >
+          History
+        </NavLink>
       </>
     );
   };
